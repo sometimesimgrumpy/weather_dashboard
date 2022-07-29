@@ -8,7 +8,10 @@ var uvIndexText = document.getElementById("uv-index");
 var searchForm = document.getElementById("search");
 var searchInput = document.getElementById("search-input");
 var searchBtn = document.getElementById("search-btn");
+
 var apiKey = "ec0a797efaebf445c668b2e3e33670a7";
+
+var searchedCities = [];
 
 //click function to button/form
 searchForm.addEventListener("submit", function (event) {
@@ -39,10 +42,11 @@ searchForm.addEventListener("submit", function (event) {
 
 //display weather data in main section
 function showWeatherData(data) {
-  var { name } = data;
-  var { icon } = data.weather[0];
-  var { speed } = data.wind;
-  var { temp, humidity } = data.main;
+  var name = data.name;
+  var icon = data.weather[0].icon;
+  var speed = data.wind.speed;
+  var temp = data.main.temp;
+  var humidity = data.main.humidity;
 
   console.log(name, icon, temp, humidity, speed);
 
@@ -52,11 +56,6 @@ function showWeatherData(data) {
   windText.innerText = Math.floor(speed);
   humidityText.innerText = humidity;
 }
-
-// function getLonLat(data) {
-//     var { lon, lat } = data[0]
-//     console.log(lon, lat)
-// }
 
 //pass the data to get the uv index
 function getUVIndex(data) {
