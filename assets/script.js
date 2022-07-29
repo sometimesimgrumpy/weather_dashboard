@@ -9,7 +9,7 @@ var searchForm = document.getElementById("search");
 var searchInput = document.getElementById("search-input");
 var searchBtn = document.getElementById("search-btn");
 
-var apiKey = "ec0a797efaebf445c668b2e3e33670a7";
+var apiKey = "5911de58d825147b5fa891cd55dfb5c0";
 
 var searchedCities = [];
 
@@ -20,82 +20,71 @@ searchForm.addEventListener("submit", function (event) {
   var city = searchInput.value;
   console.log(city);
 
+  //fix link references and nesting
   fetch(
-    "https://api.openweathermap.org/data/2.5/weather?q=" +
-      city +
-      "&appid=" +
-      apiKey +
-      "&units=imperial"
+    `https://api.openweathermap.org/geo/1.0/direct?q=${city}&appid=${apiKey}`
   )
     .then((response) => response.json())
-    .then((data) => showWeatherData(data));
+    .then(function (data) {
+      var lon = data[0].lon;
+      var lat = data[0].lat;
+      console.log(lon, lat);
 
-  fetch(
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
-      city +
-      "&limit=1&appid=" +
-      apiKey
-  )
-    .then((response) => response.json())
-    .then((data) => getUVIndex(data));
+      fetch(
+        `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial
+        `
+      )
+        .then((response) => response.json())
+        .then(function (data) {
+          showWeatherData(data, city);
+          getUVIndex(data);
+          showFiveDays(data);
+        });
+    });
 });
 
 //display weather data in main section
-function showWeatherData(data) {
-  var name = data.name;
-  var icon = data.weather[0].icon;
-  var speed = data.wind.speed;
-  var temp = data.main.temp;
-  var humidity = data.main.humidity;
+function showWeatherData(data, city) {
+  var name = city;
+  var icon = data.current.weather[0].icon;
+  var speed = data.current.wind_speed;
+  var temp = data.current.temp;
+  var humidity = data.current.humidity;
 
   console.log(name, icon, temp, humidity, speed);
 
   cityNameText.innerText = name;
   temperatureText.innerText = Math.floor(temp);
-  weatherIcon.src = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
+  weatherIcon.src = "https://openweathermap.org/img/w/" + icon + "@2x.png";
   windText.innerText = Math.floor(speed);
   humidityText.innerText = humidity;
 }
 
 //pass the data to get the uv index
+// display the uv index text
 function getUVIndex(data) {
-  var { lon, lat } = data[0];
-  console.log(lon, lat);
+  var uvIndexNum = data.current.uvi;
+  console.log(uvIndexNum);
 
-  fetch(
-    "https://api.openweathermap.org/data/2.5/uvi?appid=" +
-      apiKey +
-      "&lat=" +
-      lat +
-      "&lon=" +
-      lon
-  )
-    .then((response) => response.json())
-    .then((data) => pass(data));
-
-  // display the uv index text
-  function pass(data) {
-    var { value } = data;
-    console.log(value);
-
-    uvIndexText.innerText = value;
-    uvColor(value);
-  }
-}
-
-//conditional formatting for the UVindex
-function uvColor() {
-  if (uvIndexText.textContent <= 2) {
-    uvIndexText.classList.add("bg-success");
-  } else if (uvIndexText.textContent >= 3 && uvIndexText.textContent < 5) {
-    uvIndexText.classList.add("bg-warning");
-  } else if (uvIndexText.textContent >= 5) {
-    uvIndexText.classList.add("bg-danger");
+  if (uvIndexNum <= 2) {
+    uvIndexText.className = "btn-sm btn-success";
+  } else if (uvIndexNum < 5) {
+    uvIndexText.className = "btn-sm btn-warning";
   } else {
-    return;
+    uvIndexText.className = "btn-sm btn-danger";
   }
+  uvIndexText.innerText = uvIndexNum;
 }
 
-function showFiveDays(data) {}
+function showFiveDays(data) {
+  var weatherCard = document.getElementById("weather-card");
+  var date = new Date().toLocaleDateString();
+  console.log(date);
 
-//uvColor()
+  for (let i = 0; i < 5; i++) {
+    let index = i + 1;
+    var icon = data.daily[index].weather[0].icon;
+    var temp = data.daily[index].wind_speed;
+    var humidity = data.daily[index].humidity;
+  }
+}
