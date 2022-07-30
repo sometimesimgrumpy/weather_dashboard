@@ -12,16 +12,23 @@ var cityHistory = document.getElementById("cities-history");
 
 var apiKey = "5911de58d825147b5fa891cd55dfb5c0";
 
+//empty array for local storage
 var searchedCities = [];
 
-//click function to button/form
-//searchForm.addEventListener("submit", getData);
-searchBtn.addEventListener("click", getData);
+//show current seattle weather first
+init();
 
-function getData() {
-  //event.preventDefault();
+//click function to search button
+searchBtn.addEventListener("click", handleCitySearch);
 
-  var city = searchInput.value;
+//refactor this handler so it can pass the historical search cities
+function handleCitySearch(event) {
+  event.preventDefault();
+  var search = searchInput.value.trim();
+  getData(search);
+}
+
+function getData(city) {
   console.log(city);
 
   //fix link references and nesting
@@ -71,6 +78,7 @@ function getUVIndex(data) {
   var uvIndexNum = data.current.uvi;
   console.log(uvIndexNum);
 
+  //conditionally change the color of the index number displayed based on conditions
   if (uvIndexNum <= 2) {
     uvIndexText.className = "btn-sm btn-success";
   } else if (uvIndexNum < 5) {
@@ -81,6 +89,7 @@ function getUVIndex(data) {
   uvIndexText.innerText = uvIndexNum;
 }
 
+//return 5 day forecast into the elements
 function showFiveDays(data) {
   for (let i = 0; i < 5; i++) {
     let index = i + 1;
@@ -92,6 +101,7 @@ function showFiveDays(data) {
     var wind = data.daily[index].wind_speed;
     var humidity = data.daily[index].humidity;
 
+    document.getElementById(`date${i}`).innerHTML = date;
     document.getElementById(`date${index}`).innerHTML = date;
     document.getElementById(`temp${index}`).innerHTML = Math.floor(temp);
     document.getElementById(
@@ -102,11 +112,8 @@ function showFiveDays(data) {
   }
 }
 
+//save cities in local storage
 function savedCities(city) {
-  if (searchedCities.includes(city)) {
-    return;
-  }
-
   console.log("test");
   if (localStorage.getItem("searchedCities") !== null) {
     searchedCities = JSON.parse(localStorage.getItem("searchedCities"));
@@ -133,6 +140,7 @@ function savedCities(city) {
   updateCities();
 }
 
+//save previously searched cities and update buttons
 function updateCities() {
   if (searchedCities.length < 10) {
     console.log("test update cities");
@@ -141,25 +149,23 @@ function updateCities() {
 
     console.log(button.innerHTML);
 
-    button.setAttribute("class", "btn btn-secondary my-1");
+    button.setAttribute("class", "d-block p-auto btn btn-secondary my-2");
     cityHistory.append(button);
   } else {
     for (let i = 0; i < 10; i++) {
       button.innerHTML = searchedCities[i];
     }
   }
+  //makes history buttons clickable
   cityHistory.addEventListener("click", function (event) {
-    //event.preventDefault();
-    var savedCity = event.target.innerText;
-    getData(savedCity);
-    console.log(`saved city: ${savedCity}`);
+    //get city text from button itself
+    var city = event.target.innerText;
+    getData(city);
+    console.log(`saved city: ${city}`);
   });
+}
 
-  // function pastCities(event) {
-  //   var city = event.target.children.innerText;
-  //   console.log(city);
-  //   if (city != null) {
-  //     getData(city);
-  //  }
-  //}
+//show current seattle weather first before search
+function init() {
+  getData("Seattle");
 }
