@@ -3,7 +3,7 @@ var cityNameText = document.getElementById("city-name");
 var temperatureText = document.getElementById("temperature");
 var windText = document.getElementById("wind");
 var humidityText = document.getElementById("humidity");
-var weatherIcon = document.getElementById("weather-icon");
+var weatherIcon = document.getElementById("main-weather-icon");
 var uvIndexText = document.getElementById("uv-index");
 var searchForm = document.getElementById("search");
 var searchInput = document.getElementById("search-input");
@@ -38,7 +38,7 @@ searchForm.addEventListener("submit", function (event) {
         .then(function (data) {
           showWeatherData(data, city);
           getUVIndex(data);
-          showFiveDays(data);
+          showFiveDays(data, city);
         });
     });
 });
@@ -55,7 +55,7 @@ function showWeatherData(data, city) {
 
   cityNameText.innerText = name;
   temperatureText.innerText = Math.floor(temp);
-  weatherIcon.src = "https://openweathermap.org/img/w/" + icon + "@2x.png";
+  weatherIcon.src = `https://openweathermap.org/img/w/${icon}@2x.png`;
   windText.innerText = Math.floor(speed);
   humidityText.innerText = humidity;
 }
@@ -77,14 +77,24 @@ function getUVIndex(data) {
 }
 
 function showFiveDays(data) {
-  var weatherCard = document.getElementById("weather-card");
-  var date = new Date().toLocaleDateString();
   console.log(date);
 
   for (let i = 0; i < 5; i++) {
     let index = i + 1;
+    var dayJS = dayjs();
+    var date = dayJS.add(index, "d").format("MM/DD/YY");
+
     var icon = data.daily[index].weather[0].icon;
-    var temp = data.daily[index].wind_speed;
+    var temp = data.daily[index].temp.day;
+    var wind = data.daily[index].wind_speed;
     var humidity = data.daily[index].humidity;
+
+    document.getElementById(`date${index}`).innerHTML = date;
+    document.getElementById(`temp${index}`).innerHTML = Math.floor(temp);
+    document.getElementById(
+      `weather-icon${index}`
+    ).src = `https://openweathermap.org/img/w/${icon}@2x.png`;
+    document.getElementById(`wind${index}`).innerHTML = Math.floor(wind);
+    document.getElementById(`humid${index}`).innerHTML = humidity;
   }
 }

@@ -29,31 +29,66 @@
     </div>
 
         <!-- Weather Output -->
-        <div class="weather-container bg-light col-9">
+        <div class="weather-container bg-light col-9 sm-text">
             <div class="weather-city row p-5">
                 <h2 id="city-name"></h2>
+                <img id="main-weather-icon" src=""></img>
                 <p>Temp: <span id="temperature"></span>° F</p>
                 <p>Wind: <span id="wind"></span> mph</p>
                 <p>Humidity: <span id="humidity"></span>%</p>
                 <p>UV Index: <span class="btn" id="uv-index">0.00</span></p>
             </div>
-            <div class="weather-card row p-5 bg-secondary" id="weather-container">
+            <div class="weather-card row p-5 bg-secondary" id="weekly-container">
                 <h3 class="mb-3">5-Day Forecast</h3>
+
                 <div class="card col-2 p-1 mx-2">
-                    <h2>date</h2>
-                    <img id="weather-icon" src=""></img>
-                    Temp <br>
-                    Wind <br>
-                    Humidity
+                    <h5 id="date1" class="bg-secondary">date</h5>
+                    <img id="weather-icon1" src=""></img>
+                    <p>Temp:<span id="temp1"></span>° F</p>
+                    <p>Wind: <span id="wind1"></span> mph</p>
+                    <p>Humidity: <span id="humid1"></span>%</p>
                 </div>
-                <div class="card col-2 p-1 mx-2">Info</div>
-                <div class="card col-2 p-1 mx-2">Info</div>
-                <div class="card col-2 p-1 mx-2">Info</div>
-                <div class="card col-2 p-1 mx-2">Info</div>
+
+                <div class="card col-2 p-1 mx-2">
+                    <h5 id="date2" class="bg-secondary">date</h5>
+                    <img id="weather-icon2" src=""></img>
+                    <p>Temp:<span id="temp2"></span>° F</p>
+                    <p>Wind: <span id="wind2"></span> mph</p>
+                    <p>Humidity: <span id="humid2"></span>%</p>
+                </div>
+
+
+                <div class="card col-2 p-1 mx-2">
+                    <h5 id="date3" class="bg-secondary">date</h5>
+                    <img id="weather-icon3" src=""></img>
+                    <p>Temp:<span id="temp3"></span>° F</p>
+                    <p>Wind: <span id="wind3"></span> mph</p>
+                    <p>Humidity: <span id="humid3"></span>%</p>
+                </div>
+
+                <div class="card col-2 p-1 mx-2">
+                    <h5 id="date4" class="bg-secondary">date</h5>
+                    <img id="weather-icon4" src=""></img>
+                    <p>Temp:<span id="temp4"></span>° F</p>
+                    <p>Wind: <span id="wind4"></span> mph</p>
+                    <p>Humidity: <span id="humid4"></span>%</p>
+                </div>
+
+                <div class="card col-2 p-1 mx-2">
+                    <h5 id="date5" class="bg-secondary">date</h5>
+                    <img id="weather-icon5" src=""></img>
+                    <p>Temp:<span id="temp5"></span>° F</p>
+                    <p>Wind: <span id="wind5"></span> mph</p>
+                    <p>Humidity: <span id="humid5"></span>%</p>
+                </div>
+
+                </div>
             </div>
         </div>
 </div>
 
+<!-- dayJS script for better formatted date call -->
+<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
 <script src="./assets/script.js"></script>
 </body>
 </html>
