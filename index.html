@@ -17,22 +17,23 @@
 <div class="container p-0 row">
     <!-- Sidebar for search -->
     <div class="d-flex flex-column flex-shrink-0 p-4 text-white bg-dark col-2 sidebar" style="height: 100vh">
-        <form id="search">
+        <!-- <form id="search"> -->
             <input type="text" class="input-group form-control" id="search-input"/>
             <button type="search" class="btn btn-success btn-block" id="search-btn">Search</button>
-        </form>
+        <!-- </form> -->
 
-        <ul class="mt-4">
+        <ul class="mt-4" id="cities-history">
             <!-- Search History goes here -->
-            <button type="button" class="btn btn-secondary">Last City</button>
+            <h5>Last Cities</h5>
+            <!-- <button type="button" class="btn btn-secondary" id="last-city">Last City</button> -->
         </ul>
     </div>
 
         <!-- Weather Output -->
-        <div class="weather-container bg-light col-9 sm-text">
+        <div class="weather-container bg-light col-10 mx-auto sm-text">
             <div class="weather-city row p-5">
                 <h2 id="city-name"></h2>
-                <img id="main-weather-icon" src=""></img>
+                <img id="main-weather-icon" src="" style="width: 100px;"></img>
                 <p>Temp: <span id="temperature"></span>° F</p>
                 <p>Wind: <span id="wind"></span> mph</p>
                 <p>Humidity: <span id="humidity"></span>%</p>
@@ -44,7 +45,7 @@
                 <div class="card col-2 p-1 mx-2">
                     <h5 id="date1" class="bg-secondary">date</h5>
                     <img id="weather-icon1" src=""></img>
-                    <p>Temp:<span id="temp1"></span>° F</p>
+                    <p>Temp: <span id="temp1"></span>° F</p>
                     <p>Wind: <span id="wind1"></span> mph</p>
                     <p>Humidity: <span id="humid1"></span>%</p>
                 </div>
@@ -52,7 +53,7 @@
                 <div class="card col-2 p-1 mx-2">
                     <h5 id="date2" class="bg-secondary">date</h5>
                     <img id="weather-icon2" src=""></img>
-                    <p>Temp:<span id="temp2"></span>° F</p>
+                    <p>Temp: <span id="temp2"></span>° F</p>
                     <p>Wind: <span id="wind2"></span> mph</p>
                     <p>Humidity: <span id="humid2"></span>%</p>
                 </div>
@@ -61,7 +62,7 @@
                 <div class="card col-2 p-1 mx-2">
                     <h5 id="date3" class="bg-secondary">date</h5>
                     <img id="weather-icon3" src=""></img>
-                    <p>Temp:<span id="temp3"></span>° F</p>
+                    <p>Temp: <span id="temp3"></span>° F</p>
                     <p>Wind: <span id="wind3"></span> mph</p>
                     <p>Humidity: <span id="humid3"></span>%</p>
                 </div>
@@ -69,7 +70,7 @@
                 <div class="card col-2 p-1 mx-2">
                     <h5 id="date4" class="bg-secondary">date</h5>
                     <img id="weather-icon4" src=""></img>
-                    <p>Temp:<span id="temp4"></span>° F</p>
+                    <p>Temp: <span id="temp4"></span>° F</p>
                     <p>Wind: <span id="wind4"></span> mph</p>
                     <p>Humidity: <span id="humid4"></span>%</p>
                 </div>
@@ -77,7 +78,7 @@
                 <div class="card col-2 p-1 mx-2">
                     <h5 id="date5" class="bg-secondary">date</h5>
                     <img id="weather-icon5" src=""></img>
-                    <p>Temp:<span id="temp5"></span>° F</p>
+                    <p>Temp: <span id="temp5"></span>° F</p>
                     <p>Wind: <span id="wind5"></span> mph</p>
                     <p>Humidity: <span id="humid5"></span>%</p>
                 </div>
